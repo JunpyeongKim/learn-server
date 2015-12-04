@@ -16,30 +16,71 @@
 
 # 1.3 Vagrant 를 사용한 가상 서버 준비
 - Vagrant
+    - 서버 가상화 소프트웨어(e.g. VirtualBox)의 Frontend
     - Ruby 로 만들어진 OSS
-- Virtual Box 설치
-    - http://www.virtualbox.org
-- Vagrant 설치
-    - http://vagrantup.com
-        - $ vagrant -v
-    - (*) box : vagrant 용 OS 이미지
-        - Opscode 를 관리하는 Bento 라는 프로젝트 box 를 사용
-    - 가상 이미지 받기
-        - $ vagrant box add cento http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
-        - ~/.vagrant.d
-            - 메타 데이터와 이미지
-    - 가상 서버 가동
-        - $ vagrant init centos
-            - (*) Vagrantfile
-        - $ vagrant up
-        - $ vagrant ssh -C 'sudo /etc/init.d/vboxadd setup'
-        - $ vagrant reload
-        - $ vagrant ssh
-    - 가상 서버의 정지와 삭제
-        - $ vagrant halt
-        - $ vagrant destroy
-    - ssh 설정
-        - $ vagrant ssh-config --host webdb >> ~/.ssh/config
+    - (*) Chef 검증 환경을 구성 & 테스트 주도 서버 환경 구성할 때 편리
+        - 즉, 한 번 만들고 지워도 상관없는 호스트를 구성하는데 매우 편리
+
+## 1.3.1 Virtual Box 설치
+- http://www.virtualbox.org
+
+## 1.3.2 Vagrant 설치
+- http://vagrantup.com
+    - $ vagrant -v
+    - (*) Box : Vagrant 용 OS 이미지
+        - Box 를 얻는 방법은 여러 가지 --> Bento 프로젝트(Opscode 를 관리) box 를 사용
+- 가상 이미지 받기
+    - $ vagrant box add centos http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+        ```
+        $ vagrant box add centos65 http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+        ==> box: Box file was not detected as metadata. Adding it directly...
+        ==> box: Adding box 'centos65' (v0) for provider: 
+            box: Downloading: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
+        ==> box: Successfully added box 'centos65' (v0) for 'virtualbox'!
+        ```
+    - ~/.vagrant.d
+        - 메타 데이터와 이미지가 저장된다
+        - (*) $ ll ~/.vagrant.d/boxes/centos65/0/virtualbox/
+- 가상 서버 가동
+    - (*) $ mkdir -p ~/workspace/vagrant/centos65 & $ cd ~/workspace/vagrant/centos65 
+    - $ vagrant init centos65
+        - (*) Vagrantfile 생성
+        ```
+        A `Vagrantfile` has been placed in this directory. You are now
+        ready to `vagrant up` your first virtual environment! Please read
+        the comments in the Vagrantfile as well as documentation on
+        `vagrantup.com` for more information on using Vagrant.
+        ```
+    - $ vagrant up
+        - (*) Failed to mount folders in Linux guest. This is usually because the "vboxsf" file system is not available.
+            ```
+            Failed to mount folders in Linux guest. This is usually because
+            the "vboxsf" file system is not available. Please verify that
+            the guest additions are properly installed in the guest and
+            can work properly. The command attempted was:
+            
+            mount -t vboxsf -o uid=`id -u vagrant`,gid=`getent group vagrant | cut -d: -f3` vagrant /vagrant
+            mount -t vboxsf -o uid=`id -u vagrant`,gid=`id -g vagrant` vagrant /vagrant
+            
+            The error output from the last command was:
+            
+            /sbin/mount.vboxsf: mounting failed with the error: No such device
+            ```
+            - $ vagrant plugin install vagrant-vbguest
+                - (*) Reference : http://blog.mdnsolutions.com/index.php/vagrant-up-in-mac-os-vboxsf-file-system-is-not-available/ 
+                - (*) if failed,
+                    - $ sudo gem install nokogiri -v '1.6.6.2'
+                        - $ ruby -v
+                        - if <= 1.9.2, update Ruby
+                            - (*) http://stackoverflow.com/questions/3696564/how-to-update-ruby-to-1-9-x-on-mac
+    - $ vagrant ssh -C 'sudo /etc/init.d/vboxadd setup'
+    - $ vagrant reload
+    - $ vagrant ssh
+- 가상 서버의 정지와 삭제
+    - $ vagrant halt
+    - $ vagrant destroy
+- ssh 설정
+    - $ vagrant ssh-config --host webdb >> ~/.ssh/config
 
 
 
