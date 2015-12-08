@@ -66,13 +66,31 @@
             
             /sbin/mount.vboxsf: mounting failed with the error: No such device
             ```
-            - $ vagrant plugin install vagrant-vbguest
-                - (*) Reference : http://blog.mdnsolutions.com/index.php/vagrant-up-in-mac-os-vboxsf-file-system-is-not-available/ 
-                - (*) if failed,
-                    - $ sudo gem install nokogiri -v '1.6.6.2'
-                        - $ ruby -v
-                        - if <= 1.9.2, update Ruby
-                            - (*) http://stackoverflow.com/questions/3696564/how-to-update-ruby-to-1-9-x-on-mac
+        - $ vagrant plugin install vagrant-vbguest
+            - (*) Reference : http://blog.mdnsolutions.com/index.php/vagrant-up-in-mac-os-vboxsf-file-system-is-not-available/ 
+            - (*) if failed,
+                - $ sudo gem install nokogiri -v '1.6.6.2'
+                    - $ ruby -v
+                    - if <= 1.9.2, update Ruby
+                        - (*) http://stackoverflow.com/questions/3696564/how-to-update-ruby-to-1-9-x-on-mac
+        - (*) Check it up (http://releases.ubuntu.com & http://www.vagrantbox.es)
+            - Ubuntu 10.04.4 LTS (Lucid Lynx)
+                - Ubuntu lucid 64
+                    - http://files.vagrantup.com/lucid64.box
+            - Ubuntu 12.04.5 LTS (Precise Pangolin)
+                - Ubuntu precise 64 VirtualBox
+                    - http://files.vagrantup.com/precise64.box
+            - Ubuntu 14.04.3 LTS (Trusty Tahr)
+                - Ubuntu 14.04 (based on amd64 server iso file)
+                    - https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14.04/ubuntu-14.04-amd64.box
+                    - (*) $ vagrant plugin install vagrant-vbguest && $ vagrant reload
+                - Ubuntu 14.04 amd 64
+                    - https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/14.04/ubuntu-14.04-amd64.box
+                    - (*) $ vagrant plugin install vagrant-vbguest && $ vagrant reload
+            - Ubuntu 15.04 (Vivid Vervet)
+                - Ubuntu 15.04 (based on amd64 server iso file)
+                    - https://github.com/kraksoft/vagrant-box-ubuntu/releases/download/15.04/ubuntu-15.04-amd64.box
+                    - (*) $ vagrant plugin install vagrant-vbguest && $ vagrant reload
     - $ vagrant ssh -C 'sudo /etc/init.d/vboxadd setup'
     - $ vagrant reload
     - $ vagrant ssh

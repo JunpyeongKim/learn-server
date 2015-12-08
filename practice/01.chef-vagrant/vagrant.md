@@ -3,6 +3,7 @@
 
 Hypervisor
 VMWare
+Parallels
 Virtual Box
 
 반복 : Virtual Machine 생성 --> OS 설치 --> 각종 설정
